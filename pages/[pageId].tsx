@@ -31,8 +31,8 @@ export const getStaticProps = async (context) => {
 export async function getStaticPaths() {
   if (isDev) {
     return {
-      paths: [],
-      fallback: true
+      paths: []
+      //fallback: true
     }
   }
 
@@ -45,9 +45,9 @@ export async function getStaticPaths() {
           pageId
         }
       }))
-    ),
+    )
     // paths: [],
-    fallback: true
+    //fallback: true
   }
 
   console.log(ret.paths)
