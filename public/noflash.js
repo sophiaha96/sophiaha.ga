@@ -5,13 +5,13 @@
 
 ;(function () {
   // Change these if you use something different in your hook.
-  var storageKey = 'darkMode'
+  var storageKey = 'lightMode'
   var classNameDark = 'dark-mode'
   var classNameLight = 'light-mode'
 
   function setClassOnDocumentBody(darkMode) {
-    document.body.classList.add(darkMode ? classNameDark : classNameLight)
-    document.body.classList.remove(darkMode ? classNameLight : classNameDark)
+    document.body.classList.add(darkMode ? classNameLight : classNameLight)
+    document.body.classList.remove(darkMode ? classNameLight : classNameLight)
   }
 
   var preferDarkQuery = '(prefers-color-scheme: dark)'
@@ -36,7 +36,7 @@
     localStorage.setItem(storageKey, mql.matches)
   } else {
     // source of truth from document.body
-    var isDarkMode = document.body.classList.contains(classNameDark)
+    var isDarkMode = false
     localStorage.setItem(storageKey, JSON.stringify(isDarkMode))
   }
 })()

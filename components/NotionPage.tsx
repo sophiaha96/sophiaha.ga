@@ -6,10 +6,7 @@ import cs from 'classnames'
 import { useRouter } from 'next/router'
 import { useSearchParam } from 'react-use'
 import BodyClassName from 'react-body-classname'
-import useDarkMode from 'use-dark-mode'
 import { PageBlock } from 'notion-types'
-
-import { Tweet, TwitterContextProvider } from 'react-static-tweets'
 
 // core notion renderer
 import { NotionRenderer, Code, Collection, CollectionRow } from 'react-notion-x'
@@ -19,7 +16,6 @@ import { getBlockTitle } from 'notion-utils'
 import { mapPageUrl, getCanonicalPageUrl } from 'lib/map-page-url'
 import { mapNotionImageUrl } from 'lib/map-image-url'
 import { getPageDescription } from 'lib/get-page-description'
-import { getPageTweet } from 'lib/get-page-tweet'
 import { searchNotion } from 'lib/search-notion'
 import * as types from 'lib/types'
 import * as config from 'lib/config'
@@ -31,8 +27,6 @@ import { Page404 } from './Page404'
 import { PageHead } from './PageHead'
 import { PageActions } from './PageActions'
 import { Footer } from './Footer'
-import { PageSocial } from './PageSocial'
-import { GitHubShareButton } from './GitHubShareButton'
 import { ReactUtterances } from './ReactUtterances'
 
 import styles from './styles.module.css'
@@ -58,10 +52,6 @@ const Equation = dynamic(() =>
   import('react-notion-x').then((notion) => notion.Equation)
 )
 
-// we're now using a much lighter-weight tweet renderer react-static-tweets
-// instead of the official iframe-based embed widget from twitter
-// const Tweet = dynamic(() => import('react-tweet-embed'))
-
 const Modal = dynamic(
   () => import('react-notion-x').then((notion) => notion.Modal),
   { ssr: false }
@@ -82,8 +72,6 @@ export const NotionPage: React.FC<types.PageProps> = ({
   // lite mode is for oembed
   const isLiteMode = lite === 'true'
   const searchParams = new URLSearchParams(params)
-
-  const darkMode = useDarkMode(false, { classNameDark: 'dark-mode' })
 
   if (router.isFallback) {
     return <Loading />
@@ -145,31 +133,16 @@ export const NotionPage: React.FC<types.PageProps> = ({
           repo={config.utterancesGitHubRepo}
           issueMap='issue-term'
           issueTerm='title'
-          theme={darkMode.value ? 'photon-dark' : 'github-light'}
+          theme='github-light'
         />
       )
     }
-
-    const tweet = getPageTweet(block, recordMap)
-    if (tweet) {
-      pageAside = <PageActions tweet={tweet} />
-    }
   } else {
-    pageAside = <PageSocial />
   }
 
   return (
-    <TwitterContextProvider
-      value={{
-        tweetAstMap: (recordMap as any).tweetAstMap || {},
-        swrOptions: {
-          fetcher: (id) =>
-            fetch(`/api/get-tweet-ast/${id}`).then((r) => r.json())
-        }
-      }}
-    >
+    <>
       <PageHead site={site} />
-
       <Head>
         <meta property='og:title' content={title} />
         <meta property='og:site_name' content={site.name} />
@@ -247,7 +220,6 @@ export const NotionPage: React.FC<types.PageProps> = ({
           code: Code,
           collection: Collection,
           collectionRow: CollectionRow,
-          tweet: Tweet,
           modal: Modal,
           pdf: Pdf,
           equation: Equation
@@ -255,7 +227,6 @@ export const NotionPage: React.FC<types.PageProps> = ({
         recordMap={recordMap}
         rootPageId={site.rootNotionPageId}
         fullPage={!isLiteMode}
-        darkMode={darkMode.value}
         previewImages={site.previewImages !== false}
         showCollectionViewDropdown={false}
         showTableOfContents={showTableOfContents}
@@ -268,15 +239,8 @@ export const NotionPage: React.FC<types.PageProps> = ({
         searchNotion={searchNotion}
         pageFooter={comments}
         pageAside={pageAside}
-        footer={
-          <Footer
-            isDarkMode={darkMode.value}
-            toggleDarkMode={darkMode.toggle}
-          />
-        }
+        footer={<Footer />}
       />
-
-      <GitHubShareButton />
-    </TwitterContextProvider>
+    </>
   )
 }

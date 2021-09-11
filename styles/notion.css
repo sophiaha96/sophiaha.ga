@@ -8,25 +8,27 @@
  */
 
 .notion {
-  --notion-max-width: 720px;
-  --notion-header-height: 54px;
+  --notion-max-width: 1400px;
+  --notion-header-height: 40px;
 }
 
 .notion-page {
-  padding-bottom: calc(max(5vh, 32px)) !important;
+  padding-bottom: calc(max(3vh, 32px)) !important;
   line-height: 1.65;
 }
 
 .index-page {
-  --notion-max-width: 900px;
+  --notion-max-width: 2000px;
 }
 
 .notion-text {
+  font-family: Sorts Mill Goudy, serif;
+  font-size: 20px;
   padding: 0.5em 2px;
 }
 
 .notion-asset-caption {
-  text-align: center;
+  text-align: left;
 }
 
 .notion-asset-wrapper {
@@ -40,9 +42,9 @@
 }
 
 .notion-gallery-grid {
-  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   grid-gap: 6vmin;
-  gap: 6vmin;
+  gap: 1vmin;
 }
 
 .notion-gallery-grid .notion-page-icon {
@@ -50,7 +52,8 @@
 }
 
 .notion-gallery-grid .notion-page-title-text {
-  font-size: 2em;
+  font-size: 3.5em;
+  font-weight: 900;
   white-space: unset;
 }
 
@@ -66,10 +69,12 @@
 .notion-collection-card {
   border-radius: 16px;
   box-shadow: none;
+  max-height: 20vmax;
 }
 
 .notion-collection-card-cover img {
   border-radius: 16px;
+  min-height: 5vmax;
 }
 
 .notion-collection-card {
@@ -79,7 +84,7 @@
 .notion-collection-card-cover {
   border-radius: 16px;
   overflow: visible;
-  box-shadow: 2px 2px 8px 4px rgba(15, 15, 15, 0.1);
+  max-width: 32.7vmax;
 }
 
 .notion-collection-card-cover {
@@ -155,8 +160,10 @@
 }
 
 .notion-title {
+  font-size: 3rem;
+  margin-bottom: -1rem;
   display: block;
-  text-align: center;
+  text-align: left;
 }
 
 .notion-collection-column-title {
@@ -165,7 +172,9 @@
 
 .notion-collection-row-property .notion-property {
   display: flex;
-  justify-content: center;
+  font-family: Sorts Mill Goudy, serif;
+  font-size: 1rem;
+  justify-content: left;
 }
 
 .notion-collection-row-value {
@@ -173,9 +182,10 @@
 }
 
 .notion-page-cover {
-  max-width: 1200px;
-  border-radius: 24px;
-  box-shadow: 2px 2px 8px 4px rgba(15, 15, 15, 0.1);
+  display: none;
+  max-width: 900px;
+  border-radius: 40px;
+  box-shadow: 2px 2px 8px 4px rgba(61, 14, 14, 0.3);
 }
 
 @media only screen and (max-width: 1200px) {
@@ -314,7 +324,6 @@
 /* if you don't want rounded page images, remove this */
 .notion-page-icon-wrapper img.notion-page-icon {
   border-radius: 50%;
-  box-shadow: 0 8px 40px 0 rgb(0 0 0 / 21%);
 }
 
 .notion-header {
@@ -325,7 +334,7 @@
 .dark-mode .notion-header {
   background: transparent;
   box-shadow: inset 0 -1px 0 0 rgba(0, 0, 0, 0.1);
-  backdrop-filter: saturate(180%) blur(8px);
+  backdrop-filter: saturate(180%) blur(10px);
 }
 
 .notion-bookmark:hover {
